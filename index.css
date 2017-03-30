@@ -1,0 +1,9 @@
+body {
+  background-color: grey;
+}
+li {
+  font-size: 1.5em;
+}
+.high {
+  color: red;  
+}
