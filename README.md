@@ -1,4 +1,4 @@
-# Blazing Chat Client
+# React introduction
 JavaScript2, Inlämningsuppgift 5 (React)
 
 ## Demo
