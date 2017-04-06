@@ -1,0 +1,11 @@
+body {
+  background-color: grey;
+}
+
+li {
+  cursor: pointer;
+}
+
+#statusbar {
+  margin-top: 10px;
+}
