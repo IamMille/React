@@ -3,17 +3,23 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
-  <title>Inlämningsuppgift 6 (React)</title>
-  <link rel="stylesheet" type="text/css" href="uppg6.css" />
+  <title>Uppgift 6 (React)</title>
   <script src="https://unpkg.com/react@latest/dist/react.js"></script>
   <script src="https://unpkg.com/react-dom@latest/dist/react-dom.js"></script>
-  <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+  <script src="https://unpkg.com/babel-standalone@latest/babel.min.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+  <link rel="stylesheet" type="text/css" href="uppg6.css" />
 </head>
-<body>
+<body class="mdc-typography">
+  <h1>Wish list for santa</h1>
+  <span>Uppgift 6 – React</span>
+  <p>Hover over items to see when added</p>
 
-  <h2>Övn 6</h2>
   <div id="app"></div>
 
   <script type="text/babel" src="uppg6.jsx"></script>
+  <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+  <script>mdc.autoInit()</script>
 </body>
 </html>

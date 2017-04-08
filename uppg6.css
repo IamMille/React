@@ -1,11 +1,40 @@
 body {
-  background-color: grey;
-}
+  max-width: 300px;
+  padding: 20px; }
+
+button.mdc-button--primary {
+  margin-left: 45px; }
 
 li {
-  cursor: pointer;
-}
+  cursor: pointer; }
 
-#statusbar {
-  margin-top: 10px;
-}
+  li a {
+    text-decoration: none;
+    font-style: normal; }
+
+    li i.material-icons {
+      display: none; }
+
+      li:hover i.material-icons {
+        display: inline;
+        color: #aaa; }
+
+
+button.mdc-button--accent + span {
+  margin-left: 5px;
+  line-height: 1.7em; }
+
+body > h1 {
+  margin-bottom: 5px; }
+
+body > span {
+    font-family: Roboto, sans-serif;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    font-size: 0.75rem;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    line-height: 1.25rem; }
+
+body > p:before {
+  content: '• ' }
