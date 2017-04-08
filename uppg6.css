@@ -1,6 +1,19 @@
+
+html, body {
+	height: 100%; }
+
 body {
+	margin: 0;
+  display: flex;
+  justify-content: center; }
+
+main {
   max-width: 300px;
-  padding: 20px; }
+  margin-top: 20px;
+  padding: 30px; }
+
+main > div {
+  flex: 1 1 auto; }
 
 button.mdc-button--primary {
   margin-left: 45px; }
@@ -24,10 +37,10 @@ button.mdc-button--accent + span {
   margin-left: 5px;
   line-height: 1.7em; }
 
-body > h1 {
+main > h1 {
   margin-bottom: 5px; }
 
-body > span {
+main > span {
     font-family: Roboto, sans-serif;
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
@@ -35,6 +48,3 @@ body > span {
     font-weight: 400;
     letter-spacing: 0.08em;
     line-height: 1.25rem; }
-
-body > p:before {
-  content: '• ' }

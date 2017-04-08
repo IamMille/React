@@ -41,6 +41,7 @@ class App extends React.Component
 	myFormHandleChange (event) {
 		this.setState({userInput: event.target.value});
 	}
+
 	myBtnDefaultHandleClick (event) {
 		console.log("myBtnDefaultHandleClick");
 
@@ -52,13 +53,21 @@ class App extends React.Component
 		defaults.forEach( (el,i) => el.time = (new Date("2017-12-25 15:00:0"+i)).toString().slice(0,-15));
 
 		this.setState({listItems: defaults}, this.saveSession);
+		console.log("New state (default): ", this.state);
 	}
+
  	saveSession() {
 		localStorage.setItem("myList", JSON.stringify(this.state.listItems));
 	}
 
 	render () {
 		return <div>
+
+			{this.state.listItems.length
+				? <p>&bull; Hover over items to see time added</p>
+				: <p>&nbsp;</p>
+			}
+
 			<MyForm item={this.state.userInput}
 							handleChange={this.myFormHandleChange}
 				 			handleSubmit={this.myFormHandleSubmit} />
@@ -71,7 +80,6 @@ class App extends React.Component
 									handleClick={this.myBtnDefaultHandleClick} />
 			}
     </div>;
-
 	}
 }
 
