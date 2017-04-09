@@ -20,7 +20,7 @@ class App extends React.Component
 		var index = Array.prototype.indexOf.call(el.parentNode.childNodes, el);
 		var newListItems = this.state.listItems.slice(); // copy array
 		var newState = {
-			userInput: newListItems.splice(index, 1)[0].text || "", // pop out
+			userInput: newListItems.splice(index, 1)[0].text || "", // pop element
 			listItems: newListItems
 		};
 		this.setState(newState, this.saveSession);
@@ -43,17 +43,14 @@ class App extends React.Component
 	}
 
 	myBtnDefaultHandleClick (event) {
-		console.log("myBtnDefaultHandleClick");
-
 		var defaults = [
 				{text: 'A bike'},
 				{text: 'Red socks'},
 				{text: 'Lego'},
-				{text: 'Peace on earth'}];
+				{text: 'Peace on earth'} ];
 		defaults.forEach( (el,i) => el.time = (new Date("2017-12-25 15:00:0"+i)).toString().slice(0,-15));
 
 		this.setState({listItems: defaults}, this.saveSession);
-		console.log("New state (default): ", this.state);
 	}
 
  	saveSession() {
@@ -118,12 +115,14 @@ class MyList extends React.Component
 {
 	render () {
 		return <ul className="mdc-list">
-      {this.props.list.map( (item,i) =>
-        <li className="mdc-list-item" key={i}
-					onClick={this.props.handleClick}
-					title={`Added on: ${item.time}`}>{item.text}
-						<div className={css.edit}>
-	     				<i className="material-icons">edit</i></div>
+
+			{this.props.list.map( (item,i) =>
+        <li key={i} className="mdc-list-item"
+						onClick={this.props.handleClick}
+						title={`Added on: ${item.time}`}>{item.text}
+
+							<div className={css.edit}>
+	     					<i className="material-icons">edit</i></div>
 				</li>
       )}
     </ul>;
