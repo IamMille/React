@@ -1,9 +1,24 @@
 body {
-  background-color: grey;
+  background-color: #eee;
+  font-size: 18px;
 }
-li {
-  font-size: 1.5em;
+
+#app3 .last {
+  background-color: DodgerBlue ;
 }
-.high {
-  color: red;  
+#app3 .most {
+  color: red;
+}
+#app3 input {
+  text-align: center;
+}
+#app3 button {
+  cursor: pointer;
+  margin-bottom: 5px;
+}
+input, button {
+  font-size: 14px;
+}
+select {
+  font-size: 18px;
 }

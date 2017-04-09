@@ -1,160 +1,187 @@
+// ========================== Part One =====================
 
-// ----------------------- App one -----------------------
-
-var input1 = document.getElementById("input1");
-
-input1.addEventListener("keyup", event =>
+class App1 extends React.Component
 {
-  ReactDOM.render(
-    <App1 name={event.target.value}/>,
-    document.getElementById('app1result')
-  );
+  constructor() {
+    super(...arguments);
+    this.state = {userInput: ''};
+  }
 
-});
-
-class App1 extends React.Component {
   render() {
-    return (<p>{this.props.name}</p>);
+    return <div>
+      <input type="text"
+             placeholder="Enter your text..."
+             onChange={this.handleChange.bind(this)} />
+      <span> {this.state.userInput || "Hello world!"}</span>
+    </div>;
+  }
+
+  handleChange(e) {
+    this.setState({userInput: e.target.value});
   }
 }
 
-
-// ----------------------- App two -----------------------
-
-class App2 extends React.Component {render()
-{
-  const input2A = (
-    <input type="text" id="input2A" placeholder="Eneter value A" size="10"
-      onChange={inputChange} />
-  )
-  const input2B = (
-    <input type='text' id="input2B" placeholder="Eneter value B" size="10"
-    onChange={inputChange} />
-  );
-  const inputArithmetic = (
-    <select id="aritmetic" onChange={inputChange}>
-      <option>+</option>
-      <option>-</option>
-      <option>*</option>
-      <option>/</option>
-    </select>
-  );
-
-  function inputChange() {
-    var a = $("#input2A").value,
-        b = $("#input2B").value,
-        c = $("#aritmetic").value;
-
-    $("#app2result").innerText = eval(
-      Number(a) + c + Number(b)
-    );
-  }
-
-  return (
-    <p>{input2A} {inputArithmetic} {input2B}</p>
-  );
-}}
-
 ReactDOM.render(
-  <App2/>,
-  document.getElementById('app2')
+  <App1 />,
+  document.getElementById("app1")
 );
 
-// ----------------------- App three A -----------------------
+// ========================== Part Two =====================
 
-var AppData = ["serif", "sans-serif", "monospace", "cursive", "fantasy"];
+class App2 extends React.Component
+{
+  constructor() {
+    super(...arguments);
+
+    this.state = {
+      InputA: '',
+      InputB: '',
+      Aritmetic: '+',
+      calcResult: ''
+    };
+
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange(e) {
+    var el  = e.target;
+    var eln = el.placeholder
+              ? el.placeholder.replace(" ", "")
+              : "Aritmetic";
+
+    var state;
+    state = JSON.parse(JSON.stringify(this.state)); // copy obj
+    state[eln] = el.value;
+    state["calcResult"] = eval(
+      Number(state.InputA) + state.Aritmetic + Number(state.InputB)
+    );
+
+    this.setState(state);
+  }
+
+  render() {
+    return <div>
+      <input type="text" size="10"
+             placeholder="Input A"
+             onChange={this.handleChange} />
+
+      <select onChange={this.handleChange}>
+        <option>+</option>
+        <option>-</option>
+        <option>*</option>
+        <option>/</option></select>
+
+      <input type="text" size="10"
+              placeholder="Input B"
+              onChange={this.handleChange} />
+
+      <span> = {this.state.calcResult || "N/A"}</span>
+    </div>;
+  }
+}
+
+ReactDOM.render(
+  <App2 />,
+  document.getElementById("app2")
+);
+
+// ========================== Part Three =====================
 
 class App3 extends React.Component
 {
-  render() {
-    return <TheList items={AppData} />;
-  }
-}
-
-ReactDOM.render(
-  <App3/>,
-  document.getElementById('app3')
-);
-
-function TheList(props)
-{
-  const listItems = props.items.map( item =>
-    <ListItem key={item.toString()} value={item}/>
-  );
-
-  return <ul>{listItems}</ul>;
-}
-
-function ListItem(props)
-{
-  var style = { fontFamily: props.value };
-  return <li style={style}>listitem {props.value}</li>;
-}
-// ----------------------- App three B -----------------------
-
-
-class App3b extends React.Component
-{
-  constructor(props) {
-    super(props);
-    this.numClicks = 0;
-    this.handleAppClick = this.handleAppClick.bind(this);
+  constructor() {
+    super(...arguments);
+    this.state = {btnCount: 3};
+    this.myInputHandleChange = this.myInputHandleChange.bind(this);
+    this.myButtonHandleClick = this.myButtonHandleClick.bind(this);
   }
 
   render() {
-    return (<i onClick={this.handleAppClick}>
-      <MyButton id="btn3a" />
-      <MyButton id="btn3b" />
-      <MyButton id="btn3c" />
-    </i>);
+    const {
+      btnCount,
+      btnLastClick,
+    } = this.state;
+
+    return <div>
+      <label>How many buttons do we want today? </label>
+
+      <input type="text" size="5" defaultValue="3"
+             onChange={this.myInputHandleChange} />
+
+      {btnLastClick
+        ? <p>You clicked: {btnLastClick}</p>
+        : <p>Why don't you click a button below:</p>
+      }
+
+      {[...Array(btnCount)].map((x, i) => {
+        var btnName = `Button ${i+1}`;
+        return <MyButton key={i+1}
+                         btnNumber={i+1}
+                         btnClickCount={this.state[btnName]}
+                         btnIsLastClicked={btnLastClick === btnName}
+                         btnIsMostClicked={this._btnIsMostClicked(btnName)}
+                         handleClick={this.myButtonHandleClick} />
+      })}
+    </div>;
   }
 
-  handleAppClick(event)
-  {
-    console.log("handleAppClick", event.target.id);
-    var btns = $("button");
-    if (btns && btns.length === 0) return;
+  myInputHandleChange(e) {
+    var value = Number(e.target.value);
 
-    var high = {el: null, count: null};
-    btns.forEach( btn => {
-      var c = Number(btn.value);
-      if (c > high.count ||
-         (c == high.count && btn == event.target)) high = {el: btn, count: c};
-      btn.classList.remove("high");
+    if (value > 0)
+      this.setState({ btnCount: value });
+  }
+
+  myButtonHandleClick(e) {
+    var btnName = e.target.innerText;
+    var btnClickCount = Number(e.target.nextSibling.innerText) || 0;
+
+    this.setState({
+      [btnName]: ++btnClickCount,
+      btnLastClick: btnName
     });
 
-    high.el.classList.add("high");
+    e.preventDefault(); // prevent highlight?
+  }
 
-    $("#app3bresult").innerText = ++this.numClicks;
+  _btnIsMostClicked(btnName) {
+    var high = {key: "", val: 0};
+
+    for (let el in this.state) {
+      if (el.substr(0,6) != "Button") continue;
+      if (this.state[el] > high.val) high = {key: el, val: this.state[el]};
+    };
+
+    return (high.key === btnName);
   }
 }
 
-function MyButton(props)
+class MyButton extends React.Component
 {
-  var numClicks = 0;
+  render() {
+    const {
+      btnNumber,
+      btnClickCount,
+      btnIsLastClicked,
+      btnIsMostClicked,
+      handleClick,
+    } = this.props;
 
-  return <button onClick={handleClick} id={props.id}>
-    {props.id.toUpperCase().replace("BTN3", "Knapp ")}
-  </button>;
+    const classNames = `
+      ${btnIsLastClicked ? "last" : ""}
+      ${btnIsMostClicked ? "most" : ""}`;
 
-  function handleClick(props) {
-    var el = props.target;
-    el.value = ++numClicks;
-    el.innerText = el.innerText.replace(/(\d+)$/, "") + " " + numClicks;
-    console.log("MyButton");
+    return <div>
+      <button className={classNames}
+              onClick={handleClick}
+              >Button {btnNumber}</button>
+
+      <span> {btnClickCount}</span>
+    </div>;
   }
 }
 
 ReactDOM.render(
-  <App3b/>,
-  document.getElementById('app3b')
+  <App3 />,
+  document.getElementById("app3")
 );
-// ----------------------- Santas little helper -----------------------
-
-function $(str)
-{
-  var els = document.querySelectorAll(str);
-  if (els.length === 1 && str.indexOf("#") > -1) return els[0];
-  else if (els.length > 0) return Array.from(els);
-  else return [];
-}
