@@ -1,5 +1,5 @@
 # React introduction
-JavaScript2, Inlämningsuppgift 5 (React)
+JavaScript 2, Inlämningsuppgifter React
 
 ## Demo
 https://iammille.github.io/React/
